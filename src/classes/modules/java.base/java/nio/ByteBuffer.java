@@ -321,7 +321,7 @@ public class ByteBuffer extends Buffer {
   }
   @Override
   public final ByteBuffer flip() {
-    super.flip();
-    return this;
+    return (ByteBuffer)super.flip();
   }
+
 }

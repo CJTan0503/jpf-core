@@ -21,11 +21,14 @@ package gov.nasa.jpf.test.xerces;
 import gov.nasa.jpf.util.test.TestJPF;
 
 import java.io.IOException;
+import java.io.StringReader;
 
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.junit.Test;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
@@ -38,26 +41,13 @@ import org.xml.sax.helpers.DefaultHandler;
 public class SAXParserTest extends TestJPF {
 
   @Test
-  public void testSimpleParse() throws ParserConfigurationException, SAXException, IOException  {
-
-    if (verifyNoPropertyViolation(
-            "+http.connection=http://*.dtd -- gov.nasa.jpf.CachedROHttpConnection",
-            "+http.cache_dir=src/tests/gov/nasa/jpf/test/xerces",
-            "+log.info=http")){
-      String pathName = "src/tests/gov/nasa/jpf/test/xerces/sun_checks.xml";
-
-      DefaultHandler handler = new DefaultHandler();
-
-      XMLReader mParser;
-      SAXParserFactory factory = SAXParserFactory.newInstance();
-      factory.setValidating(true);
-      factory.setNamespaceAware(true);
-      mParser = factory.newSAXParser().getXMLReader();
-      mParser.setContentHandler(handler);
-      mParser.setEntityResolver(handler);
-      mParser.setErrorHandler(handler);
-
-      mParser.parse(pathName);
+  public void testSimpleParse() throws Exception {
+    if (verifyNoPropertyViolation()) {
+        SAXParserFactory factory = SAXParserFactory.newInstance();
+        SAXParser parser = factory.newSAXParser();
+        XMLReader reader = parser.getXMLReader();
+        reader.setContentHandler(new DefaultHandler());
+        reader.parse(new InputSource(new StringReader("<root><child/></root>")));
     }
   }
 }

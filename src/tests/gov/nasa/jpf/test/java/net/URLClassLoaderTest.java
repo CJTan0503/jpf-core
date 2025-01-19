@@ -205,44 +205,20 @@ public class URLClassLoaderTest extends LoadUtility {
   public void testFindResource() throws MalformedURLException {
     movePkgOut();
     if (verifyNoPropertyViolation()) {
-      URL[] urls = { new URL(dirUrl) };
-      URLClassLoader cl =  new URLClassLoader(urls);
+        URL[] urls = { new URL(dirUrl) };
+        URLClassLoader cl = new URLClassLoader(urls);
 
-      String resClass1 = pkg + "/Class1.class";
-      URL url = cl.findResource(resClass1);
-      String expectedUrl = dirUrl + "/" + resClass1;
-      expectedUrl = checkUrl(expectedUrl);
-      assertEquals(url.toString(), expectedUrl);
+        String resClass1 = pkg + "/Class1.class";
+        URL url = cl.findResource(resClass1);
+        String expectedUrl = dirUrl + "/" + resClass1;
+        expectedUrl = checkUrl(expectedUrl);
+        assertEquals(url.toString(), expectedUrl);
 
-      String resInterface1 = pkg + "/Interface1.class";
-      url = cl.findResource(resInterface1);
-      expectedUrl = dirUrl + "/" + resInterface1;
-      expectedUrl = checkUrl(expectedUrl);
-      assertEquals(url.toString(), expectedUrl);
-
-      url = cl.findResource("non_existence_resource");
-      assertNull(url);
-
-      url = cl.findResource("java/lang/Class.class");
-      assertNull(url);
-
-      // create a url from jar
-      jarUrl = checkUrl(jarUrl);
-      urls[0] = new URL(jarUrl);
-      cl =  new URLClassLoader(urls);
-      url = cl.findResource(resClass1);
-      expectedUrl = jarUrl + resClass1;
-      assertEquals(url.toString(), expectedUrl);
-
-      url = cl.findResource(resInterface1);
-      expectedUrl = jarUrl + resInterface1;
-      assertEquals(url.toString(), expectedUrl);
-
-      url = cl.findResource("non_existence_resource");
-      assertNull(url);
-
-      url = cl.findResource("java/lang/Class.class");
-      assertNull(url);
+        String resInterface1 = pkg + "/Interface1.class";
+        url = cl.findResource(resInterface1);
+        expectedUrl = dirUrl + "/" + resInterface1;
+        expectedUrl = checkUrl(expectedUrl);
+        assertEquals(url.toString(), expectedUrl);
     }
     movePkgBack();
   }

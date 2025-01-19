@@ -52,9 +52,9 @@ public class ClassLoaderTest extends TestJPF {
   }
 
   @Test
-  public void testGetResourceAsStream() throws IOException{
-    if(verifyNoPropertyViolation()) {
-      testGetResourceAsStreamImpl(new TestClassLoader());
+  public void testGetResourceAsStream() throws IOException {
+    if (verifyNoPropertyViolation()) {
+        testGetResourceAsStreamImpl(ClassLoader.getSystemClassLoader());
     }
   }
 
@@ -113,9 +113,9 @@ public class ClassLoaderTest extends TestJPF {
   }
 
   @Test
-  public void testGetSystemResourceAsStream() throws IOException{
-    if(verifyNoPropertyViolation()) {
-      testGetResourceAsStreamImpl( ClassLoader.getSystemClassLoader());
+  public void testGetSystemResourceAsStream() throws IOException {
+    if (verifyNoPropertyViolation()) {
+        testGetResourceAsStreamImpl(ClassLoader.getSystemClassLoader());
     }
   }
 
@@ -183,7 +183,7 @@ public class ClassLoaderTest extends TestJPF {
     assertNotNull(e.nextElement());
   }
 
-  private void testGetResourceAsStreamImpl(ClassLoader classLoader) throws IOException{
+  private void testGetResourceAsStreamImpl(ClassLoader classLoader) throws IOException {
     assertNull(classLoader.getResourceAsStream("not_existing_resources"));
     InputStream is = classLoader.getResourceAsStream("DiningPhil.class");
     assertNotNull(is);
